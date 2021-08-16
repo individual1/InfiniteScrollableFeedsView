@@ -1,9 +1,8 @@
 //
 //  FeedsModule.swift
-//  DataFlow
+//  InfiniteScrollableFeedsViewApp
 //
-//  Created by Balachandar on 1/15/19.
-//  Copyright © 2019 DataFlowGroup. All rights reserved.
+//  Created by Bhawna on 14/08/21.
 //
 
 import Foundation

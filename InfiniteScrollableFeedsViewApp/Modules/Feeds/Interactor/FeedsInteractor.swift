@@ -1,9 +1,8 @@
 //
 //  FeedsInteractor.swift
-//  DataFlow
+//  InfiniteScrollableFeedsViewApp
 //
-//  Created by Balachandar on 1/15/19.
-//  Copyright © 2019 DataFlowGroup. All rights reserved.
+//  Created by Bhawna on 14/08/21.
 //
 
 import Foundation
@@ -16,16 +15,14 @@ class FeedsInteractor : FeedsInteractorInterface {
 }
 
 extension FeedsInteractor : FeedsInteractorInput {
-    func fetchData() {
-        self.remoteDataManagerInput?.fetchData()
+    func fetchData(after: String) {
+        self.remoteDataManagerInput?.fetchData(after: after)
     }
 }
 
 
 extension FeedsInteractor : FeedsRemoteDataManagerOutput {
-    func onResponseFeedss(_ result: FeedsResult) {
+    func onResponseFeedss(_ result: AnyResult) {
          output?.onResponseFeedss(result)
-    }
-    
-    
+    }    
 }

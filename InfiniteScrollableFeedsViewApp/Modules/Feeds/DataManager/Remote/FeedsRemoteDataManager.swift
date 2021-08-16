@@ -1,9 +1,8 @@
 //
 //  FeedsRemoteDataManager.swift
-//  DataFlow
+//  InfiniteScrollableFeedsViewApp
 //
-//  Created by Balachandar on 1/15/19.
-//  Copyright © 2019 DataFlowGroup. All rights reserved.
+//  Created by Bhawna on 14/08/21.
 //
 
 import Foundation
@@ -11,23 +10,31 @@ import Alamofire
 import AlamofireObjectMapper
 import ObjectMapper
 
-typealias FeedsResult = Result<[FeedsModel],AFError>
+typealias AnyResult = Result<Any>
 
 class FeedsRemoteDataManager : FeedsRemoteDataManagerInterface {
     typealias Output = FeedsRemoteDataManagerOutput
     weak var output: Output?
+    private var isFetchInProgress = false
 }
 extension FeedsRemoteDataManager :FeedsRemoteDataManagerInput {
     
-    func fetchData() {
+    func fetchData(after:String) {
         debugPrint("URL::::::\(Endpoints.Feeds.fetch.url)")
-        AF.request(
-            Endpoints.Feeds.fetch.url,
+        guard !isFetchInProgress else {
+            return
+        }
+        isFetchInProgress = true
+       // DispatchQueue.main.async { [unowned self] in
+        Alamofire.request(
+            Endpoints.Feeds.fetch.url.appending(after),
             method: .get,
             parameters: nil,
             headers: Helper.headers()
-            ).responseArray(keyPath: KEYS.FEEDS_PATH) { (response: AFDataResponse<[FeedsModel]>) in
-                self.output?.onResponseFeedss(response.result)
+        ).responseJSON { (dataResponse) in
+            self.isFetchInProgress = false
+            self.output?.onResponseFeedss(dataResponse.result)
         }
+   // }
     }
 }

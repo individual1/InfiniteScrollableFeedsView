@@ -1,37 +1,44 @@
 //
-//  MyCasesView.swift
-//  DataFlow
+//  FeedsView.swift
+//  InfiniteScrollableFeedsViewApp
 //
-//  Created by Balachandar on 1/15/19.
-//  Copyright © 2019 DataFlowGroup. All rights reserved.
+//  Created by Bhawna on 14/08/21.
 //
 
 import Foundation
 import UIKit
 
-class FeedsView: UIViewController {
-    @IBOutlet weak var tblView: UITableView!
+class FeedsView: UIViewController, UITableViewDataSourcePrefetching {
     
+    private var afterLink = ""
+    private enum CellIdentifiers {
+        static let id = "cellid"
+    }
+    
+    var tblView : UITableView = {
+        var tableView = UITableView()
+        return tableView
+    }()
     var presenter: FeedsPresenterInterface!
     
     fileprivate struct Style {
         static let headerViewId = "TableSectionView"
-        static let myCasesCellId = "MyCasesCell"
-        static let myProfileEmptyCellId = "MyProfilesEmptyCell"
-        
+        static let feedsCellId = "FeedsCell"
+        static let myFeedsEmptyCellId = "MyFeedsEmptyCell"
         static let rowHeight = CGFloat(110.0)
-        static let topPadding = CGFloat(10.0)
-        static let sectionHeight = CGFloat(20.0)
-        static let topPaddingEmptyView = CGFloat(40.0)
+        //static let topPadding = CGFloat(10.0)
+        //static let sectionHeight = CGFloat(20.0)
+        //static let topPaddingEmptyView = CGFloat(40.0)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
-       // presenter.fetchFeedsList()
+        self.navigationController?.navigationBar.backgroundColor = UIColor.white
+        presenter.fetchFeedsList(afterLink: afterLink)
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.view.backgroundColor = UIColor.red
+        self.view.backgroundColor = UIColor.white
         super.viewWillAppear(animated)
     }
     
@@ -40,15 +47,44 @@ class FeedsView: UIViewController {
     }
     
     func setup(){
-//        self.title = presenter.navTitle()
-//        self.tblView.estimatedRowHeight = Style.rowHeight
-//        self.tblView.tableFooterView = UIView()
-//        tblView.separatorColor = UIColor.clear
-//        tblView.register(UINib(nibName: "TableSectionView", bundle: nil), forHeaderFooterViewReuseIdentifier: Style.headerViewId)
+        tblView = UITableView(frame: CGRect.zero, style: .grouped)
+        self.view.addSubview(tblView)
+        tblView.fillSuperview()
+        tblView.backgroundColor = UIColor(red: 236/255.0, green: 238/255.0, blue: 240/255.0, alpha: 1.0)
+        tblView.register(FeedsCell.self, forCellReuseIdentifier: CellIdentifiers.id)
+        tblView.isHidden = true
+        tblView.dataSource = self
+        tblView.delegate = self
+        tblView.estimatedRowHeight = 600
+        tblView.separatorStyle = .none
+        tblView.rowHeight = UITableView.automaticDimension
+        tblView.prefetchDataSource = self
     }
+    
+    
+    var lastContentOffset: CGFloat = 0
+
+    // this delegate is called when the scrollView (i.e your UITableView) will start scrolling
+//    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+//        self.lastContentOffset = scrollView.contentOffset.y
+//    }
+//
+//    // while scrolling this delegate is being called so you may now check which direction your scrollView is being scrolled to
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if self.lastContentOffset < scrollView.contentOffset.y {
+//            // did move up
+//            print("did mov UP")
+//           // presenter.fetchFeedsList(afterLink: afterLink)
+//        } else if self.lastContentOffset > scrollView.contentOffset.y {
+//            // did move down
+//            print("did mov down")
+//        } else {
+//            // didn't move
+//        }
+//    }
 }
 
-/*extension FeedsView : UITableViewDataSource, UITableViewDelegate  {
+extension FeedsView : UITableViewDataSource, UITableViewDelegate  {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return presenter?.numberOfSections() ?? 0
@@ -60,67 +96,95 @@ class FeedsView: UIViewController {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        if presenter.emptyFeedsText!.count == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: Style.myCasesCellId, for: indexPath) as! FeedsCell
+       // if presenter.emptyFeedsText!.count == 0 {
+           // let cell = tableView.dequeueReusableCell(withIdentifier: Style.feedsCellId, for: indexPath) as! FeedsCell
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.id, for: indexPath) as! FeedsCell
             cell.selectionStyle = .none
-            
-            if let item = presenter?.item(at: indexPath.section) {
-                //cell.configureCell(applicantId: item.applicantId, caseId: item.caseId, status: item.status)
-            }
-            return cell
+        if isLoadingCell(for: indexPath) {
+           //TODO
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: Style.myProfileEmptyCellId, for: indexPath) as! FeedsCell
-            cell.selectionStyle = .none
-//            cell.delegate = self
-//            
-//            if let text = presenter.emptyFeedsText {
-//                cell.configureCell(withTitle: text)
-//            }
-            return cell
+            if let item = presenter?.item(at: indexPath.section) {
+                self.afterLink = item.afterLink ?? ""
+                cell.configureCell(imgageUrlStr: item.thumbnail, feedTittle: item.title, feedNoofComments: item.num_comments, feedScore: item.score, thumbnailWidth: item.thumbnailWidth ?? 0, thumbnailHeight: item.thumbnailHeight ?? 0)
+            }
         }
+           
+            return cell
+//        } else {
+//            let cell = tableView.dequeueReusableCell(withIdentifier: Style.myProfileEmptyCellId, for: indexPath) as! FeedsCell
+//            cell.selectionStyle = .none
+////            cell.delegate = self
+////
+////            if let text = presenter.emptyFeedsText {
+////                cell.configureCell(withTitle: text)
+////            }
+//            return cell
+//        }
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
-    }
-    
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return UITableView.automaticDimension
+//    }
+//    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
        // tableView.deselectRow(at: indexPath, animated: true)
         presenter.didSelectItem(at: indexPath)
     }
     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0{
-            if presenter.emptyFeedsText?.count == 0 {
-                return Style.topPadding + Style.sectionHeight
-            } else {
-                return Style.topPaddingEmptyView + Style.sectionHeight
-            }
+
+    
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        if indexPaths.contains(where: isLoadingCell) {
+            presenter.fetchFeedsList(afterLink: afterLink)
+           // tblView.reloadData()
         }
-        
-        return Style.sectionHeight
     }
     
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: Style.headerViewId) as! TableSectionView
-//        header.topConstraint.constant = 0
-//        header.bottomConstraint.constant = 0
-//        header.titleLbl.text = ""
-//        header.layoutIfNeeded()
-//        return header
-//    }
-}*/
-//extension FeedsView : FeedsEmptyCellDelegate {
-//    func onClickCreateProfile() {
-//        presenter.back()
-//    }
-//}
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        // need to pass your indexpath then it showing your indicator at bottom
+        tableView.addLoading(indexPath) {
+            // add your code here
+            // append Your array and reload your tableview
+           // self.tblView.reloadData()
+            tableView.stopLoading() // stop your indicator
+        }
+    }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 0
+    }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if(section == 0){
+            return UIView()
+        }
+        else{
+        let view = UIView.init(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 20))
+        view.backgroundColor = UIColor(red: 236/255.0, green: 238/255.0, blue: 240/255.0, alpha: 1.0)
+        return view
+        }
+    }
+}
+
 extension FeedsView : FeedsViewInterface {
     var controller: UIViewController? {
         return self
     }
     
     func reloadData() {
-       // self.tblView.reloadData()
+        tblView.isHidden = false
+       // DispatchQueue.main.async { [unowned self] in
+        self.tblView.reloadData()
+       // }
+    }
+}
+internal extension FeedsView {
+    func isLoadingCell(for indexPath: IndexPath) -> Bool {
+        return indexPath.section == ((presenter?.numberOfSections())! - 5)
+    }
+
+    func visibleIndexPathsToReload(intersecting indexPaths: [IndexPath]) -> [IndexPath] {
+        let indexPathsForVisibleRows = tblView.indexPathsForVisibleRows ?? []
+        let indexPathsIntersection = Set(indexPathsForVisibleRows).intersection(indexPaths)
+        return Array(indexPathsIntersection)
     }
 }

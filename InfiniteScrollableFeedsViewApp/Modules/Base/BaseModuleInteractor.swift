@@ -23,15 +23,15 @@ public protocol BaseModuleInteractorInput: class {
 }
 
 public protocol BaseModuleInteractorOutput: class {
-    func didFetchedResponse(_ data: NSDictionary?)
-    func onError(error: String?)
+//    func didFetchedResponse(_ data: NSDictionary?)
+//    func onError(error: String?)
 }
 
-extension BaseModuleInteractorOutput {
-    func didFetchedResponse(_ data: NSDictionary?) {
-        //optional
-    }
-    func onError(error: String?) {
-        //optional
-    }
-}
+//extension BaseModuleInteractorOutput {
+//    func didFetchedResponse(_ data: NSDictionary?) {
+//        //optional
+//    }
+//    func onError(error: String?) {
+//        //optional
+//    }
+//}

@@ -1,9 +1,8 @@
 //
 //  FeedsPresenter.swift
-//  DataFlow
+//  InfiniteScrollableFeedsViewApp
 //
-//  Created by Balachandar on 1/15/19.
-//  Copyright © 2019 DataFlowGroup. All rights reserved.
+//  Created by Bhawna on 14/08/21.
 //
 
 import Foundation
@@ -18,23 +17,24 @@ class FeedsPresenter : BaseModulePresentable, BaseModuleInteractable {
     weak var view: ModuleView!
     var interactor: ModuleInteractor!
     var wireframe: ModuleWireframe!
-    
-    private var _caseItems: [FeedsModel] = []
+     var _feedItems: [FeedsModel] = []
     private var _emptyFeedsText: String = ""
 }
+
 extension FeedsPresenter : FeedsPresenterInterface {
-   
     
-    func fetchFeedsList() {
-        view.showHUD()
-        self.interactor.fetchData()
+    func fetchFeedsList(afterLink: String) {
+       // view.showHUD()
+        self.interactor.fetchData(after: afterLink)
     }
-    
    
     var emptyFeedsText: String? {
         return _emptyFeedsText
     }
     
+//    var feedItems: [FeedsModel]? {
+//        return _feedItems
+//    }
     
     func navTitle() -> String {
         return "CONTROLLER_TITLE.MY_CASES_TITLE"
@@ -42,7 +42,7 @@ extension FeedsPresenter : FeedsPresenterInterface {
     
     func numberOfSections() -> Int {
         if self.emptyFeedsText?.count == 0 {
-            return _caseItems.count
+            return _feedItems.count
         } else {
             return 1
         }
@@ -58,48 +58,47 @@ extension FeedsPresenter : FeedsPresenterInterface {
         }
     }
     func item(at indexPath: IndexPath) -> FeedsModel? {
-        return _caseItems[indexPath.section]
+        return _feedItems[indexPath.section]
     }
     
     func item(at section: Int) -> FeedsModel? {
-        return _caseItems[section]
-    }
-    
-  
-   
-    func presentLogin() {
-        self.wireframe.showLoginScreen(from: view.controller)
-    }
-    func back() {
-        wireframe.pop(viewController: view.controller)
+        return _feedItems[section]
     }
 }
 extension FeedsPresenter : FeedsInteractorOutput {
     
-    func onResponseFeedss(_ result: FeedsResult) {
-        view.hideHUD()
+    func onResponseFeedss(_ result: AnyResult) {
+        //view.hideHUD()
         switch result {
         case .success(let jsonObject):
-            debugPrint("jsonObject :::: \(jsonObject)")
-            _caseItems.removeAll()
-            _caseItems = jsonObject
-            if _caseItems.count > 0 {
-                _emptyFeedsText = ""
-            } else {
-               // _emptyFeedsText = ERROR_MESSAGE.MY_CASE_EMPTY
-            }
-            view?.reloadData()
-            
+            debugPrint(jsonObject)
+            self.handleResponse(jsonObject as? [String : Any])
         case .failure(let error):
-            debugPrint(error.isInvalidURLError )
-            debugPrint(error.isSessionTaskError )
-//            if error.message == ERROR_MESSAGE.DONT_HAVE_PROFILE {
-//                _emptyFeedsText = ERROR_MESSAGE.MY_CASE_EMPTY
-//                 view?.reloadData()
-//            } else {
-//                _emptyFeedsText = ""
-//                 self.wireframe.showError(error: error.message, from: view.controller)
-//            }
+            debugPrint(error.localizedDescription)
+           // wireframe.showError(error: error.localizedDescription, from: view.controller)
         }
+    }
+    
+    func handleResponse(_ data:[String:Any]?) {
+        guard let _data = data?[KEYS.DATA] as? [String:Any] else {
+            return
+        }
+        let afterLink = _data[KEYS.AFTER]
+        if let passportNumbers = _data[KEYS.CHILDREN] as? Array<Any>  {
+            for i in 0..<passportNumbers.count {
+                let children = passportNumbers[i] as? [String : Any]
+                print(children![KEYS.DATA] as Any)
+                guard let _data = children?[KEYS.DATA] as? [String:Any] else {
+                   return
+                }
+                if ((_data[KEYS.NUM_COMMENTS] as? NSNumber) != nil) && ((_data[KEYS.SCORE] as? NSNumber) != nil){
+                    let numberComments = _data[KEYS.NUM_COMMENTS] as? NSNumber
+                    let score = _data[KEYS.SCORE] as? NSNumber
+                    let FeedModel = FeedsModel(thumbnail: (_data[KEYS.THUMBNAIL]! as! String), title: (_data[KEYS.TITTLE]! as! String), num_comments: numberComments as? Int ?? 0, score: score as? Int ?? 0, afterLink: afterLink as? String, thumbnailWidth: _data[KEYS.THUMBNAIL_WIDTH] as? Int ?? 0, thumbnailHeight:  _data[KEYS.THUMBNAIL_HEIGHT] as? Int ?? 0)
+                    _feedItems.append(FeedModel)
+                }
+            }
+        }
+        view?.reloadData()
     }
 }

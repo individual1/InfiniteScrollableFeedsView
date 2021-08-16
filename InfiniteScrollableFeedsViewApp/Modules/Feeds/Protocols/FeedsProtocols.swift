@@ -1,9 +1,8 @@
 //
-//  FeedssProtocols.swift
-//  DataFlow
+//  FeedsProtocols.swift
+//  InfiniteScrollableFeedsViewApp
 //
-//  Created by Balachandar on 1/15/19.
-//  Copyright © 2019 DataFlowGroup. All rights reserved.
+//  Created by Bhawna on 14/08/21.
 //
 
 import Foundation
@@ -17,13 +16,12 @@ protocol FeedsViewInterface: BaseModuleView {
 
 protocol FeedsPresenterInterface: BaseModulePresenter {
     var  emptyFeedsText: String? { get }
-    func fetchFeedsList()
+    func fetchFeedsList(afterLink: String)
     func numberOfSections() -> Int
     func numberOfItems(in section: Int) -> Int
     func item(at indexPath: IndexPath) -> FeedsModel?
     func item(at section: Int) -> FeedsModel?
     func didSelectItem(at indexPath: IndexPath)
-    func back()
 }
 protocol FeedsWireframeInterface: BaseModuleWireframe {
     static func createFeedsModule() -> FeedsModule
@@ -32,11 +30,11 @@ protocol FeedsWireframeInterface: BaseModuleWireframe {
 
 
 protocol FeedsInteractorInput: BaseModuleInteractorInput {
-    func fetchData()
+    func fetchData(after: String)
 }
 
 protocol FeedsInteractorOutput: BaseModuleInteractorOutput {
-    func onResponseFeedss(_ result: FeedsResult)
+    func onResponseFeedss(_ result: AnyResult)
 }
 
 protocol FeedsInteractorInterface: BaseModuleInteractor {
@@ -49,7 +47,7 @@ protocol FeedsRemoteDataManagerInput: BaseModuleRemoteDataManagerInput {
 }
 
 protocol FeedsRemoteDataManagerOutput: BaseModuleRemoteDataManagerOutput {
-    func onResponseFeedss(_ result: FeedsResult)
+    func onResponseFeedss(_ result: AnyResult)
 }
 
 protocol FeedsRemoteDataManagerInterface: BaseModuleRemoteDataManager {

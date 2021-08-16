@@ -14,10 +14,10 @@ public protocol BaseModuleRemoteDataManager: class {
 }
 
 public protocol BaseModuleRemoteDataManagerInput: class {
-    func fetchData()
+    func fetchData(after: String)
 }
 extension BaseModuleRemoteDataManagerInput {
-    func fetchData() {
+    func fetchData(after: String) {
         //optional
     }
 }

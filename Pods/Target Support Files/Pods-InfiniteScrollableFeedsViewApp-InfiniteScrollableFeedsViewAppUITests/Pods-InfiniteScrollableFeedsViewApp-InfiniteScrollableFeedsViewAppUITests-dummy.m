@@ -1,0 +1,5 @@
+#import <Foundation/Foundation.h>
+@interface PodsDummy_Pods_InfiniteScrollableFeedsViewApp_InfiniteScrollableFeedsViewAppUITests : NSObject
+@end
+@implementation PodsDummy_Pods_InfiniteScrollableFeedsViewApp_InfiniteScrollableFeedsViewAppUITests
+@end

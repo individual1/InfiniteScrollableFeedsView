@@ -1,0 +1,6 @@
+framework module Pods_InfiniteScrollableFeedsViewApp {
+  umbrella header "Pods-InfiniteScrollableFeedsViewApp-umbrella.h"
+
+  export *
+  module * { export * }
+}

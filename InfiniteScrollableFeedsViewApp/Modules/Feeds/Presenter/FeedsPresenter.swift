@@ -64,7 +64,7 @@ extension FeedsPresenter : FeedsInteractorOutput {
         switch result {
         case .success(let jsonObject):
             self.handleResponse(jsonObject as? [String : Any])
-        case .failure(let error):
+        case .failure( _): break
            //Handle the failure case here
         }
     }

@@ -17,15 +17,15 @@ class FeedsRemoteDataManager : FeedsRemoteDataManagerInterface {
     weak var output: Output?
     private var isFetchInProgress = false
 }
+
 extension FeedsRemoteDataManager :FeedsRemoteDataManagerInput {
-    
+
+    //API call to get the feeds
     func fetchData(after:String) {
-        debugPrint("URL::::::\(Endpoints.Feeds.fetch.url)")
         guard !isFetchInProgress else {
             return
         }
         isFetchInProgress = true
-       // DispatchQueue.main.async { [unowned self] in
         Alamofire.request(
             Endpoints.Feeds.fetch.url.appending(after),
             method: .get,
@@ -35,6 +35,5 @@ extension FeedsRemoteDataManager :FeedsRemoteDataManagerInput {
             self.isFetchInProgress = false
             self.output?.onResponseFeedss(dataResponse.result)
         }
-   // }
     }
 }

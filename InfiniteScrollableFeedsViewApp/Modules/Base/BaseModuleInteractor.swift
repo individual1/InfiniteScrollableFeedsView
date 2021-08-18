@@ -19,19 +19,10 @@ public protocol BaseModuleInteractor: class {
 }
 
 public protocol BaseModuleInteractorInput: class {
-    
+    // write BaseModuleInteractorOutput methods and properties for BaseModuleInteractorInput
 }
 
 public protocol BaseModuleInteractorOutput: class {
-//    func didFetchedResponse(_ data: NSDictionary?)
-//    func onError(error: String?)
+// write BaseModuleInteractorOutput methods and properties for BaseModuleInteractorOutput
 }
 
-//extension BaseModuleInteractorOutput {
-//    func didFetchedResponse(_ data: NSDictionary?) {
-//        //optional
-//    }
-//    func onError(error: String?) {
-//        //optional
-//    }
-//}

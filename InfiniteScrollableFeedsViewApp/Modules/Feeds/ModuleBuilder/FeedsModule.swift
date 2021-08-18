@@ -14,7 +14,6 @@ class FeedsModule: BaseModule, BaseModuleInteractable,BaseModuleRemotable {
     typealias ModuleInteractor = FeedsInteractor
     typealias ModulePresenter =  FeedsPresenter
     typealias ModuleWireframe = FeedsWireframe
-    
     typealias ModuleRemoteDataManager = FeedsRemoteDataManager
     
     weak var view: ModuleView!

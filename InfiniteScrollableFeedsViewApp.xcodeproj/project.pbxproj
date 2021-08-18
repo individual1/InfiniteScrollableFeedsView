@@ -160,11 +160,11 @@
 			children = (
 				3A5B5FA026C91CBC00872AE7 /* FeedsViewTest.swift */,
 				3A5B5FA526C92D3E00872AE7 /* FeedsModelTest.swift */,
-				3A5B5FB526C9374400872AE7 /* UITableViewExtensionTest.swift */,
 				3A5B5FBA26C9399200872AE7 /* BaseModuleTest.swift */,
 				3A5B5FBF26C941A900872AE7 /* BaseModuleRemoteDataManagerTest.swift */,
 				3A5B5FC426C9453800872AE7 /* BaseModulePresenterTest.swift */,
 				3A88D2D426C97304007FD23F /* DoubleExtensionTest.swift */,
+				3A5B5FB526C9374400872AE7 /* UITableViewExtensionTest.swift */,
 			);
 			path = FeedsModuleTest;
 			sourceTree = "<group>";

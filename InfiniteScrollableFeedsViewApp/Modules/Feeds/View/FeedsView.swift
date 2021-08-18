@@ -21,15 +21,6 @@ class FeedsView: UIViewController, UITableViewDataSourcePrefetching {
     }()
     var presenter: FeedsPresenterInterface!
     
-    fileprivate struct Style {
-        static let headerViewId = "TableSectionView"
-        static let feedsCellId = "FeedsCell"
-        static let myFeedsEmptyCellId = "MyFeedsEmptyCell"
-        static let rowHeight = CGFloat(110.0)
-        //static let topPadding = CGFloat(10.0)
-        //static let sectionHeight = CGFloat(20.0)
-        //static let topPaddingEmptyView = CGFloat(40.0)
-    }
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
@@ -61,29 +52,11 @@ class FeedsView: UIViewController, UITableViewDataSourcePrefetching {
         tblView.prefetchDataSource = self
     }
     
-    
     var lastContentOffset: CGFloat = 0
 
-    // this delegate is called when the scrollView (i.e your UITableView) will start scrolling
-//    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-//        self.lastContentOffset = scrollView.contentOffset.y
-//    }
-//
-//    // while scrolling this delegate is being called so you may now check which direction your scrollView is being scrolled to
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        if self.lastContentOffset < scrollView.contentOffset.y {
-//            // did move up
-//            print("did mov UP")
-//           // presenter.fetchFeedsList(afterLink: afterLink)
-//        } else if self.lastContentOffset > scrollView.contentOffset.y {
-//            // did move down
-//            print("did mov down")
-//        } else {
-//            // didn't move
-//        }
-//    }
 }
 
+// MARK: - UITableViewDataSource, UITableViewDelegate 
 extension FeedsView : UITableViewDataSource, UITableViewDelegate  {
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -96,9 +69,6 @@ extension FeedsView : UITableViewDataSource, UITableViewDelegate  {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-       // if presenter.emptyFeedsText!.count == 0 {
-           // let cell = tableView.dequeueReusableCell(withIdentifier: Style.feedsCellId, for: indexPath) as! FeedsCell
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.id, for: indexPath) as! FeedsCell
             cell.selectionStyle = .none
         if isLoadingCell(for: indexPath) {
@@ -109,35 +79,17 @@ extension FeedsView : UITableViewDataSource, UITableViewDelegate  {
                 cell.configureCell(imgageUrlStr: item.thumbnail, feedTittle: item.title, feedNoofComments: item.num_comments, feedScore: item.score, thumbnailWidth: item.thumbnailWidth ?? 0, thumbnailHeight: item.thumbnailHeight ?? 0)
             }
         }
-           
             return cell
-//        } else {
-//            let cell = tableView.dequeueReusableCell(withIdentifier: Style.myProfileEmptyCellId, for: indexPath) as! FeedsCell
-//            cell.selectionStyle = .none
-////            cell.delegate = self
-////
-////            if let text = presenter.emptyFeedsText {
-////                cell.configureCell(withTitle: text)
-////            }
-//            return cell
-//        }
     }
     
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return UITableView.automaticDimension
-//    }
-//    
+   
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-       // tableView.deselectRow(at: indexPath, animated: true)
         presenter.didSelectItem(at: indexPath)
     }
-    
-
-    
+     
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         if indexPaths.contains(where: isLoadingCell) {
             presenter.fetchFeedsList(afterLink: afterLink)
-           // tblView.reloadData()
         }
     }
     
@@ -172,11 +124,11 @@ extension FeedsView : FeedsViewInterface {
     
     func reloadData() {
         tblView.isHidden = false
-       // DispatchQueue.main.async { [unowned self] in
         self.tblView.reloadData()
-       // }
+      
     }
 }
+
 internal extension FeedsView {
     func isLoadingCell(for indexPath: IndexPath) -> Bool {
         return indexPath.section == ((presenter?.numberOfSections())! - 5)

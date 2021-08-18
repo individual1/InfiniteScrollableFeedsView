@@ -14,38 +14,27 @@ class FeedsPresenter : BaseModulePresentable, BaseModuleInteractable {
     
     typealias ModuleInteractor = FeedsInteractorInput
     
+    // MARK: - Properties
     weak var view: ModuleView!
     var interactor: ModuleInteractor!
     var wireframe: ModuleWireframe!
-     var _feedItems: [FeedsModel] = []
-    private var _emptyFeedsText: String = ""
+    var _feedItems: [FeedsModel] = []
 }
 
+// MARK: - FeedsPresenterInterface Extension
 extension FeedsPresenter : FeedsPresenterInterface {
     
     func fetchFeedsList(afterLink: String) {
-       // view.showHUD()
+        //Start the loader here
         self.interactor.fetchData(after: afterLink)
     }
-   
-    var emptyFeedsText: String? {
-        return _emptyFeedsText
-    }
-    
-//    var feedItems: [FeedsModel]? {
-//        return _feedItems
-//    }
-    
+ 
     func navTitle() -> String {
-        return "CONTROLLER_TITLE.MY_CASES_TITLE"
+        return CONTROLLER_TITLE.FEEDS_TITLE
     }
     
     func numberOfSections() -> Int {
-        if self.emptyFeedsText?.count == 0 {
-            return _feedItems.count
-        } else {
-            return 1
-        }
+             return _feedItems.count
     }
     
     func numberOfItems(in section: Int) -> Int {
@@ -65,20 +54,22 @@ extension FeedsPresenter : FeedsPresenterInterface {
         return _feedItems[section]
     }
 }
+
+// MARK: - FeedsInteractorOutput Extension
+
 extension FeedsPresenter : FeedsInteractorOutput {
-    
+    //Getting back the response data
     func onResponseFeedss(_ result: AnyResult) {
-        //view.hideHUD()
+        //Hide the loader here
         switch result {
         case .success(let jsonObject):
-            debugPrint(jsonObject)
             self.handleResponse(jsonObject as? [String : Any])
         case .failure(let error):
-            debugPrint(error.localizedDescription)
-           // wireframe.showError(error: error.localizedDescription, from: view.controller)
+           //Handle the failure case here
         }
     }
     
+    //Handled the API response here
     func handleResponse(_ data:[String:Any]?) {
         guard let _data = data?[KEYS.DATA] as? [String:Any] else {
             return
@@ -87,7 +78,6 @@ extension FeedsPresenter : FeedsInteractorOutput {
         if let passportNumbers = _data[KEYS.CHILDREN] as? Array<Any>  {
             for i in 0..<passportNumbers.count {
                 let children = passportNumbers[i] as? [String : Any]
-                print(children![KEYS.DATA] as Any)
                 guard let _data = children?[KEYS.DATA] as? [String:Any] else {
                    return
                 }

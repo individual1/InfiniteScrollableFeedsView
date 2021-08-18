@@ -15,7 +15,6 @@ protocol FeedsViewInterface: BaseModuleView {
 }
 
 protocol FeedsPresenterInterface: BaseModulePresenter {
-    var  emptyFeedsText: String? { get }
     func fetchFeedsList(afterLink: String)
     func numberOfSections() -> Int
     func numberOfItems(in section: Int) -> Int
@@ -28,7 +27,6 @@ protocol FeedsWireframeInterface: BaseModuleWireframe {
     func showFeedsDetailsScreen(from view: FeedsViewInterface, for model: FeedsModel)
 }
 
-
 protocol FeedsInteractorInput: BaseModuleInteractorInput {
     func fetchData(after: String)
 }
@@ -38,12 +36,12 @@ protocol FeedsInteractorOutput: BaseModuleInteractorOutput {
 }
 
 protocol FeedsInteractorInterface: BaseModuleInteractor {
-    
+    //write required methods for FeedsInteractorInterface if needed
 }
 
 
 protocol FeedsRemoteDataManagerInput: BaseModuleRemoteDataManagerInput {
-    
+    //write required methods for FeedsRemoteDataManagerInput if needed
 }
 
 protocol FeedsRemoteDataManagerOutput: BaseModuleRemoteDataManagerOutput {

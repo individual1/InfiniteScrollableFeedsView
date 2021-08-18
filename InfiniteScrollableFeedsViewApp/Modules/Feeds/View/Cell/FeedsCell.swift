@@ -22,7 +22,7 @@ class TableViewBaseCell: UITableViewCell {
     }
     
     func setupCell() {
-        
+        //cell can be setup here
     }
 }
 
@@ -31,59 +31,36 @@ class FeedsCell: TableViewBaseCell {
     func configureCell(imgageUrlStr:String?, feedTittle:String?,feedNoofComments:Int?,feedScore:Int?,thumbnailWidth: Int, thumbnailHeight: Int) {
         print(imgageUrlStr!)
 
-        feedImageView.sd_setImage(with: URL(string: imgageUrlStr!), placeholderImage: UIImage(), options: []) { (image, error, SDImageCacheType, url) in
+        feedImageView.sd_setImage(with: URL(string: imgageUrlStr!), placeholderImage: nil, options: []) { (image, error, SDImageCacheType, url) in
             if(image != nil) {
             if image?.size.width != 0 {
                 let ratio = thumbnailHeight/thumbnailWidth
             if (ratio < 1){
-
              let newImage =  self.ResizeImage(image: image!, targetSize: CGSize(width: self.contentView.bounds.width, height: self.contentView.bounds.width*2))
-                print("image set case 1")
                 self.feedImageView.image = newImage
             } else if ( ratio == 1){
                 let newImage =  self.ResizeImage(image: image!, targetSize: CGSize(width: self.contentView.bounds.width, height: self.contentView.bounds.width))
-                print("image set case 2")
                 self.feedImageView.image = newImage
             } else if( ratio > 1){
                 let newImage =  self.ResizeImage(image: image!, targetSize: CGSize(width: self.contentView.bounds.width*2, height: self.contentView.bounds.height))
-                print("image set case 3")
                 self.feedImageView.image = newImage
             }
+           }
+         } else {
+            self.feedImageView.image = UIImage.init(named: IMAGE_NAME.PLACEHOLDER)
         }
-        }
-        }
+      }
         feedImageView.setNeedsDisplay()
         feedTittleLbl.text = feedTittle ?? ""
         commentButton.setTitle(formatNumber(feedNoofComments ?? 0) , for: .normal)
         ScoreButton.setTitle(formatNumber(feedScore ?? 0), for: .normal)
     }
     
-    let nameLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 2
-        let attributedText = NSMutableAttributedString(string: "Entertainment", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14)])
-        attributedText.append(NSAttributedString(string: "\nMovie  •  4h  •  "
-                                                 , attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12), NSAttributedString.Key.foregroundColor:
-            UIColor.rgb(155, green: 161, blue: 171)]))
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 4
-        attributedText.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedText.string.count))
-        let attachment = NSTextAttachment()
-        attachment.image = UIImage(named: "globe_small")
-        attachment.bounds = CGRect(x: 0, y: -2, width: 12, height: 12)
-        attributedText.append(NSAttributedString(attachment: attachment))
-        
-        label.attributedText = attributedText
-        
-        return label
-    }()
-    
     var feedImageView : UIImageView = {
         var imageView = UIImageView()
         imageView.backgroundColor = .white
         imageView.contentMode = .scaleAspectFit
         imageView.layer.masksToBounds = true
-       // imageView.clipsToBounds = true
         imageView.image = UIImage(named: "aaaaa")
         return  imageView
     }()
@@ -94,15 +71,6 @@ class FeedsCell: TableViewBaseCell {
         view.alpha = 0.0
         return view
     }()
-    
-//    var feedScoreLbl: UILabel = {
-//        var label = UILabel()
-//        label.text = "#6.5"
-//        label.textColor = .gray
-//        label.font = UIFont.systemFont(ofSize: 12)
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        return label
-//    }()
     
     var feedTittleLbl: UILabel = {
         var label = UILabel()
@@ -117,8 +85,6 @@ class FeedsCell: TableViewBaseCell {
         return label
     }()
     
-  
-    
     var feedNoofCommentLbl: UILabel = {
         var label = UILabel()
         label.text = "release_date"
@@ -127,9 +93,7 @@ class FeedsCell: TableViewBaseCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
-    
-    
+        
     var horizontalLine : UIView = {
         var view = UIView()
         view.backgroundColor = UIColor.gray
@@ -156,30 +120,24 @@ class FeedsCell: TableViewBaseCell {
     
     override func setupCell()  {
 
-       // addSubview(nameLabel)
         addSubview(feedImageView)
         feedImageView.addSubview(blackShadowView)
         blackShadowView.fillSuperview()
         addSubview(feedTittleLbl)
         addSubview(ScoreButton)
-        //addSubview(feedNoofCommentLbl)
         addSubview(horizontalLine)
         addSubview(likeButton)
         addSubview(commentButton)
         addSubview(shareButton)
-        
-      //  addConstraintsWithFormat("H:|-8-[v0(44)]-8-[v1]|", views:  profileImageView)
-     // addConstraintsWithFormat("V:|-12-[v0]", views:  nameLabel)
+    
         addConstraintsWithFormat("H:|-11-[v0]|", views:  feedTittleLbl)
         addConstraintsWithFormat("V:|-15-[v0]", views:  feedTittleLbl)
-      //  addConstraintsWithFormat("H:|-4-[v0]-4-|", views: feedTittleLbl)
         addConstraintsWithFormat("H:|[v0]|", views: feedImageView)
         addConstraintsWithFormat("H:|-12-[v0(100)]|", views: ScoreButton)
         addConstraintsWithFormat("H:|-12-[v0]-12-|", views: horizontalLine)
         addConstraintsWithFormat("H:|[v0(v2)][v1(v2)][v2]|", views: likeButton, commentButton, shareButton)
         addConstraintsWithFormat("V:|-8-[v0]-8-[v1]-8-[v2(20)]-8-[v3(0.4)][v4(44)]|", views:
              feedTittleLbl, feedImageView, ScoreButton, horizontalLine, likeButton)
-        
         addConstraintsWithFormat("V:[v0(44)]|", views: commentButton)
         addConstraintsWithFormat("V:[v0(44)]|", views: shareButton)
     }

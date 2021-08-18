@@ -42,25 +42,7 @@ public protocol BaseModuleRemotable: class {
     associatedtype ModuleRemoteDataManager
 }
 
-//public protocol BaseModuleDelegate: class {
-//    
-//}
-//
-//public protocol BaseModuleDelegatable: class {
-//    
-//    var delegate: ModuleDelegate? { set get }
-//    
-//    associatedtype ModuleDelegate
-//}
 
 public protocol BaseModuleBuilder: class {
     func build(root: RootWireframe?)
 }
-
-//public protocol BaseModuleDependency: class {
-//
-//}
-//
-//public protocol BaseModuleWireframeDependency: class {
-//
-//}

@@ -20,7 +20,6 @@ extension FeedsInteractor : FeedsInteractorInput {
     }
 }
 
-
 extension FeedsInteractor : FeedsRemoteDataManagerOutput {
     func onResponseFeedss(_ result: AnyResult) {
          output?.onResponseFeedss(result)

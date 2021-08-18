@@ -30,7 +30,7 @@ struct IMAGE_NAME{
     static let LIKE = "like"
     static let COMMENT = "comment"
     static let SHARE = "share"
-    static let PLACEHOLDER = "placeholder"
+    static let PLACEHOLDER = "Placeholder"
 }
 
 struct ALERT_TITLE {

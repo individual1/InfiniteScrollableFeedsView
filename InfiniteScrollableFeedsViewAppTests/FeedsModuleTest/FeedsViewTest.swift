@@ -47,6 +47,7 @@ class FeedsViewTest: XCTestCase, UITableViewDelegate {
         sut.tblView.register(FeedsCell.self, forCellReuseIdentifier: "cellid")
         sut.tblView.dequeueReusableCell(withIdentifier: "cellid")
     }
+    
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
@@ -66,7 +67,6 @@ class FeedsViewTest: XCTestCase, UITableViewDelegate {
     
     func testFeedViewMethod() {
         sut.reloadData()
-       // sut.isLoadingCell(for: IndexPath(row: 0, section: 0))
         XCTAssertNotNil(sut.visibleIndexPathsToReload(intersecting: [IndexPath(row: 0, section: 0)]))
     }
 
@@ -80,7 +80,6 @@ class FeedsViewTest: XCTestCase, UITableViewDelegate {
     
     func testRemoteDataManager() {
         remoteDataManger.fetchData(after: "")
-       // output?.onResponseFeedss(Result<[FeedsModel]>)
     }
     
     func testInteractor() {

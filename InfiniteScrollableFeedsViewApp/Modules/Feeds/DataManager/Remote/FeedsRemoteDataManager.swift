@@ -12,19 +12,18 @@ import ObjectMapper
 
 typealias AnyResult = Result<Any>
 
-class FeedsRemoteDataManager : FeedsRemoteDataManagerInterface {
-    typealias Output = FeedsRemoteDataManagerOutput
-    weak var output: Output?
+class FeedsRemoteDataManager: FeedsRemoteDataManagerInterface {
+    typealias feedsRemoteDataOutput = FeedsRemoteDataManagerOutput
+    weak var output: feedsRemoteDataOutput?
     private var isFetchInProgress = false
 }
 
-extension FeedsRemoteDataManager :FeedsRemoteDataManagerInput {
+extension FeedsRemoteDataManager: FeedsRemoteDataManagerInput {
 
     //API call to get the feeds
     func fetchData(after:String) {
-        guard !isFetchInProgress else {
-            return
-        }
+        guard !isFetchInProgress else { return }
+        
         isFetchInProgress = true
         Alamofire.request(
             Endpoints.Feeds.fetch.url.appending(after),

@@ -13,13 +13,13 @@ class FeedsModelTest: XCTestCase {
     
     override func setUp() {
         sut = FeedsModel()
-        sut.thumbnail = CONSTANT.thumbnail
-        sut.title = CONSTANT.tittle
-        sut.num_comments = CONSTANT.nocomments
-        sut.afterLink = CONSTANT.afterLink
-        sut.score = CONSTANT.score
-        sut.thumbnailWidth = Int(CONSTANT.thumbnail_width)
-        sut.thumbnailHeight = Int(CONSTANT.thumbnail_height)
+        sut.thumbnail = MockData.thumbnail
+        sut.title = MockData.tittle
+        sut.num_comments = MockData.nocomments
+        sut.afterLink = MockData.afterLink
+        sut.score = MockData.score
+        sut.thumbnailWidth = Int(MockData.thumbnail_width)
+        sut.thumbnailHeight = Int(MockData.thumbnail_height)
     }
     
     func testModelCreated(){

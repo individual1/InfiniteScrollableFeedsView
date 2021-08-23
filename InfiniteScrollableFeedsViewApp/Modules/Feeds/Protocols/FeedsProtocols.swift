@@ -10,7 +10,7 @@ import Foundation
 protocol FeedsModuleBuilder: BaseModuleBuilder { }
 
 protocol FeedsViewInterface: BaseModuleView {
-    var presenter: FeedsPresenterInterface! { set get }
+    var presenter: FeedsPresenterInterface! { get set }
     func reloadData()
 }
 
@@ -19,9 +19,8 @@ protocol FeedsPresenterInterface: BaseModulePresenter {
     func numberOfSections() -> Int
     func numberOfItems(in section: Int) -> Int
     func item(at indexPath: IndexPath) -> FeedsModel?
-    func item(at section: Int) -> FeedsModel?
-    func didSelectItem(at indexPath: IndexPath)
 }
+
 protocol FeedsWireframeInterface: BaseModuleWireframe {
     static func createFeedsModule() -> FeedsModule
     func showFeedsDetailsScreen(from view: FeedsViewInterface, for model: FeedsModel)
@@ -39,7 +38,6 @@ protocol FeedsInteractorInterface: BaseModuleInteractor {
     //write required methods for FeedsInteractorInterface if needed
 }
 
-
 protocol FeedsRemoteDataManagerInput: BaseModuleRemoteDataManagerInput {
     //write required methods for FeedsRemoteDataManagerInput if needed
 }
@@ -49,5 +47,5 @@ protocol FeedsRemoteDataManagerOutput: BaseModuleRemoteDataManagerOutput {
 }
 
 protocol FeedsRemoteDataManagerInterface: BaseModuleRemoteDataManager {
-    
+   //write required methods for FeedsRemoteDataManagerInterface if needed
 }

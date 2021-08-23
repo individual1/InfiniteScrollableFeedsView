@@ -9,7 +9,7 @@
 import UIKit
 
 public protocol RootWireframe: class {
-    var window: UIWindow! { set get }
+    var window: UIWindow! { get set }
 }
 
 public enum WireframeStyle {
@@ -33,8 +33,8 @@ public struct WireframeExitProperty {
 
 public protocol BaseModuleWireframe: class {
     
-    var root: RootWireframe? { set get }
-    var style: WireframeStyle! { set get }
+    var root: RootWireframe? { get set }
+    var style: WireframeStyle! { get set }
     init(root: RootWireframe?)
     
 }

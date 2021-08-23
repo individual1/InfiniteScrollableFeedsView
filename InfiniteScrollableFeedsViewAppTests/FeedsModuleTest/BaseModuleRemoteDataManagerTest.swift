@@ -11,12 +11,10 @@ import XCTest
 class BaseModuleRemoteDataManagerTest: XCTestCase {
     var sutOutput: FeedsRemoteDataManagerOutput?
     var sut: FeedsRemoteDataManagerInput?
-  
 
     func testRemoteDataManagerInput() {
         sutOutput?.onResponseData(NSDictionary())
         sutOutput?.onError(error: "error")
         sut?.fetchData(after: "")
     }
-
 }

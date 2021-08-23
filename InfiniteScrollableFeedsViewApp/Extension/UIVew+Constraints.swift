@@ -9,14 +9,17 @@ import UIKit
 
 extension UIView {
     func addConstraintsWithFormat(_ format: String, views: UIView...) {
-        var viewsDictionary = [String: UIView]()
+        var viewsInfo = [String: UIView]()
         for (index, view) in views.enumerated() {
             let key = "v\(index)"
             view.translatesAutoresizingMaskIntoConstraints = false
-            viewsDictionary[key] = view
+            viewsInfo[key] = view
         }
         
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: format, options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: viewsDictionary))
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: format,
+                                                      options: NSLayoutConstraint.FormatOptions(),
+                                                      metrics: nil,
+                                                      views: viewsInfo))
     }
     
     /*
@@ -27,7 +30,7 @@ extension UIView {
     
     // MARK: - NSLayoutAnchor Constraints
     
-    public func fillSuperview() {
+     func fillSuperview() {
         translatesAutoresizingMaskIntoConstraints = false
         if let superview = superview {
             leftAnchor.constraint(equalTo: superview.leftAnchor).isActive = true

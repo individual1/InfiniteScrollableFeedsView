@@ -5,9 +5,9 @@
 //  Created by Bhawna on 15/08/21.
 //
 
+import UIKit
 import XCTest
 @testable import InfiniteScrollableFeedsViewApp
-import UIKit
 
 class UITableViewExtensionTest: XCTestCase {
     var sut: UITableView!
@@ -26,5 +26,4 @@ class UITableViewExtensionTest: XCTestCase {
         sut.stopLoading()
         XCTAssert(sut.indicatorView().isAnimating == false)
     }
-   
 }

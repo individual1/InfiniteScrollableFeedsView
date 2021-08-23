@@ -47,9 +47,8 @@ extension FeedsModule: FeedsModuleBuilder {
 }
 
 extension FeedsModule {
-    
     convenience init() {
-        let vc = FeedsWireframe.feedsStoryboard.instantiateViewController(ofType: FeedsView.self)
+        let vc = FeedsView.init()
         self.init(view: vc)
     }
 }

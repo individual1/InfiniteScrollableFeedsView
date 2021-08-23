@@ -10,9 +10,8 @@ import Foundation
 
 public protocol BaseModuleInteractor: class {
 
-    var remoteDataManagerInput: RemoteDataManagerInput? { set get }
-
-    var output: Output? { set get }
+    var remoteDataManagerInput: RemoteDataManagerInput? { get set }
+    var output: Output? { get set }
 
     associatedtype RemoteDataManagerInput
     associatedtype Output

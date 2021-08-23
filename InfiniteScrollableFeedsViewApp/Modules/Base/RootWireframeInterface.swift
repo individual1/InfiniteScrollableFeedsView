@@ -9,6 +9,6 @@
 import UIKit
 
 public protocol RootWireframeInterface {
-    var window: UIWindow! { set get }
+    var window: UIWindow! { get set }
     func showRoot(with viewController: UIViewController, in window: UIWindow)
 }

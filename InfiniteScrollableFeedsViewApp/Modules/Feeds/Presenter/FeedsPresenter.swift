@@ -9,9 +9,7 @@ import Foundation
 
 class FeedsPresenter : BaseModulePresentable, BaseModuleInteractable {
     typealias ModuleView = FeedsViewInterface
-    
     typealias ModuleWireframe = FeedsWireframeInterface
-    
     typealias ModuleInteractor = FeedsInteractorInput
     
     // MARK: - Properties
@@ -22,45 +20,36 @@ class FeedsPresenter : BaseModulePresentable, BaseModuleInteractable {
 }
 
 // MARK: - FeedsPresenterInterface Extension
-extension FeedsPresenter : FeedsPresenterInterface {
+extension FeedsPresenter: FeedsPresenterInterface {
     
     func fetchFeedsList(afterLink: String) {
-        //Start the loader here
+        view.showHUD()
         self.interactor.fetchData(after: afterLink)
     }
  
     func navTitle() -> String {
-        return CONTROLLER_TITLE.FEEDS_TITLE
+        return ControllerTittle.feedsTittle
     }
     
     func numberOfSections() -> Int {
-             return _feedItems.count
+        return _feedItems.count
     }
     
     func numberOfItems(in section: Int) -> Int {
         return 1
     }
     
-    func didSelectItem(at indexPath: IndexPath) {
-        if let item = self.item(at: indexPath.section) {
-            self.wireframe.showFeedsDetailsScreen(from: view, for: item)
-        }
-    }
     func item(at indexPath: IndexPath) -> FeedsModel? {
         return _feedItems[indexPath.section]
-    }
-    
-    func item(at section: Int) -> FeedsModel? {
-        return _feedItems[section]
     }
 }
 
 // MARK: - FeedsInteractorOutput Extension
 
-extension FeedsPresenter : FeedsInteractorOutput {
+extension FeedsPresenter: FeedsInteractorOutput {
     //Getting back the response data
     func onResponseFeedss(_ result: AnyResult) {
-        //Hide the loader here
+        view.hideHUD()
         switch result {
         case .success(let jsonObject):
             self.handleResponse(jsonObject as? [String : Any])
@@ -71,20 +60,23 @@ extension FeedsPresenter : FeedsInteractorOutput {
     
     //Handled the API response here
     func handleResponse(_ data:[String:Any]?) {
-        guard let _data = data?[KEYS.DATA] as? [String:Any] else {
-            return
-        }
-        let afterLink = _data[KEYS.AFTER]
-        if let passportNumbers = _data[KEYS.CHILDREN] as? Array<Any>  {
-            for i in 0..<passportNumbers.count {
-                let children = passportNumbers[i] as? [String : Any]
-                guard let _data = children?[KEYS.DATA] as? [String:Any] else {
-                   return
-                }
-                if ((_data[KEYS.NUM_COMMENTS] as? NSNumber) != nil) && ((_data[KEYS.SCORE] as? NSNumber) != nil){
-                    let numberComments = _data[KEYS.NUM_COMMENTS] as? NSNumber
-                    let score = _data[KEYS.SCORE] as? NSNumber
-                    let FeedModel = FeedsModel(thumbnail: (_data[KEYS.THUMBNAIL]! as! String), title: (_data[KEYS.TITTLE]! as! String), num_comments: numberComments as? Int ?? 0, score: score as? Int ?? 0, afterLink: afterLink as? String, thumbnailWidth: _data[KEYS.THUMBNAIL_WIDTH] as? Int ?? 0, thumbnailHeight:  _data[KEYS.THUMBNAIL_HEIGHT] as? Int ?? 0)
+        guard let _data = data?[Keys.data] as? [String:Any] else { return }
+        
+        let afterLink = _data[Keys.after]
+        if let childObj = _data[Keys.children] as? Array<Any>  {
+            for i in 0..<childObj.count {
+                let children = childObj[i] as? [String : Any]
+                guard let _data = children?[Keys.data] as? [String:Any] else { return }
+                if let _ = _data[Keys.numComments] as? NSNumber, let _ = _data[Keys.score] as? NSNumber {
+                    let numberComments = _data[Keys.numComments] as? NSNumber
+                    let score = _data[Keys.score] as? NSNumber
+                    let FeedModel = FeedsModel(thumbnail: (_data[Keys.thumbnail]! as! String),
+                                               title: (_data[Keys.tittle]! as! String),
+                                               num_comments: numberComments as? Int ?? 0,
+                                               score: score as? Int ?? 0,
+                                               afterLink: afterLink as? String,
+                                               thumbnailWidth: _data[Keys.thumbnailWidth] as? Int ?? 0,
+                                               thumbnailHeight:  _data[Keys.thumbnailHeight] as? Int ?? 0)
                     _feedItems.append(FeedModel)
                 }
             }

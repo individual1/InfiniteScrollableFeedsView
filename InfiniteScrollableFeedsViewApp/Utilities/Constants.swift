@@ -7,39 +7,38 @@
 
 import UIKit
 
-struct KEYS {
-    static let FEEDS_PATH = "DataFlow"
-    static let DATA = "data"
-    static let CHILDREN = "children"
-    static let AFTER = "after"
-    static let NUM_COMMENTS = "num_comments"
-    static let THUMBNAIL = "thumbnail"
-    static let THUMBNAIL_HEIGHT = "thumbnail_width"
-    static let THUMBNAIL_WIDTH = "thumbnail_height"
-    static let SCORE = "score"
-    static let TITTLE = "title"
+struct Keys {
+    static let data = "data"
+    static let children = "children"
+    static let after = "after"
+    static let numComments = "num_comments"
+    static let thumbnail = "thumbnail"
+    static let thumbnailHeight = "thumbnail_width"
+    static let thumbnailWidth = "thumbnail_height"
+    static let score = "score"
+    static let tittle = "title"
 }
    
-struct BUTTON_TITLE {
-    static let LIKE = "Like"
-    static let COMMENT = "Comment"
-    static let SHARE = "Share"
+struct ButtonTittle {
+    static let like = "Like"
+    static let comment = "Comment"
+    static let share = "Share"
 }
     
-struct IMAGE_NAME{
-    static let LIKE = "like"
-    static let COMMENT = "comment"
-    static let SHARE = "share"
-    static let PLACEHOLDER = "Placeholder"
+struct ImageName{
+    static let like = "likeIcon"
+    static let comment = "commentIcon"
+    static let share = "shareIcon"
+    static let placeholder = "placeholderIcon"
 }
 
-struct ALERT_TITLE {
-    static let OK = "Ok"
-    static let CANCEL = "Cancel"
-    static let WARNING = "Warning"
+struct AlertTittle {
+    static let ok = "Ok"
+    static let cancel = "Cancel"
+    static let warning = "Warning"
 }
 
-struct CONSTANT {
+struct MockData {
     static let thumbnail_width: Int = 140
     static let thumbnail_height: Int = 140
     static let score: Int = 140
@@ -47,17 +46,17 @@ struct CONSTANT {
     static let tittle: String = "We've been waiting for you"
     static let thumbnail = "https://a.thumbs.redditmedia.com/CiP-EY1pCMUrNvo3KbV2hGNS04YlyP60Ghsx72r66l0.jpg"
     static let afterLink = "t3_p3ypyd"
-    
 }
 
-struct CONTROLLER_TITLE {
-    static let FEEDS_TITLE = "My Feeds"
+struct ControllerTittle {
+    static let feedsTittle = "My Feeds"
 }
- struct VIEW_CONTROLLER_IDS {
-    static let FeedsStoryBorad = "Feeds"
+ 
+struct ViewControllerIds {
+    static let feedsStoryBoard = "Feeds"
 }
 
-struct CELL_IDS {
-   static let FEED_CELL = "cellid"
+struct CellIds {
+   static let feedCell = "cellid"
 }
 

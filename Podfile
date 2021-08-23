@@ -11,7 +11,6 @@ target 'InfiniteScrollableFeedsViewApp' do
   pod 'AlamofireImage'
   pod 'SDWebImage'
   pod 'KRProgressHUD'
-  pod 'Kingfisher', '~> 5.0'
   target 'InfiniteScrollableFeedsViewAppTests' do
     inherit! :search_paths
     # Pods for testing

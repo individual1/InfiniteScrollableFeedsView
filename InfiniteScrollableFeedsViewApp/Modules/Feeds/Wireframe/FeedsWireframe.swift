@@ -12,7 +12,6 @@ import UIKit
 class  FeedsWireframe : FeedsWireframeInterface {
    
     var root: RootWireframe?
-    
     var style: WireframeStyle!
     
     required init(root: RootWireframe?) {
@@ -20,11 +19,11 @@ class  FeedsWireframe : FeedsWireframeInterface {
     }
 
     static var feedsStoryboard: UIStoryboard {
-        return UIStoryboard(name: VIEW_CONTROLLER_IDS.FeedsStoryBorad, bundle: Bundle.main)
+        return UIStoryboard(name: ViewControllerIds.feedsStoryBoard, bundle: Bundle.main)
     }
     
     static func createFeedsModule() -> FeedsModule {
-        let view = feedsStoryboard.instantiateViewController(ofType: FeedsView.self)
+        let view = FeedsView()
         let module = FeedsModule(view: view)
         module.build(root:(((UIApplication.shared.delegate) as! AppDelegate).root as? RootWireframe))
         return module

@@ -7,16 +7,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "97EADC4D-0DFD-43B2-8331-80DE4AE5DC45"
-            shouldBeEnabled = "No"
+            uuid = "A7B67A69-4F86-47A7-ADDB-9C993612F75C"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "InfiniteScrollableFeedsViewApp/Modules/Feeds/Presenter/FeedsPresenter.swift"
+            filePath = "InfiniteScrollableFeedsViewApp/Modules/Feeds/DataManager/Remote/FeedsRemoteDataManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "92"
-            endingLineNumber = "92"
-            landmarkName = "handleResponse(_:)"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
+            landmarkName = "fetchData(after:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

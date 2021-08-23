@@ -9,22 +9,25 @@
 import Foundation
 
 public protocol BaseModuleRemoteDataManager: class {
-    var output: Output? { set get }
+    var output: Output? { get set }
     associatedtype Output
 }
 
 public protocol BaseModuleRemoteDataManagerInput: class {
     func fetchData(after: String)
 }
+
 extension BaseModuleRemoteDataManagerInput {
     func fetchData(after: String) {
         //optional
     }
 }
+
 public protocol BaseModuleRemoteDataManagerOutput: class {
     func onResponseData(_ data: NSDictionary)
     func onError(error: String?)
 }
+
 extension BaseModuleRemoteDataManagerOutput {
     func onResponseData(_ data: NSDictionary) {
         //optional

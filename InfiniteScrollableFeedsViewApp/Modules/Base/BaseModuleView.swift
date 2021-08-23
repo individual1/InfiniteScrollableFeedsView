@@ -15,11 +15,11 @@ public protocol BaseModuleView: class {
     
     func showHUD()
     func hideHUD()
-    func showHUD(withError error:String?)
-    func showError(error:String?)
+    func showHUD(withError error: String?)
+    func showError(error: String?)
     
-    func showHUD(message : String?)
-    func updateHUD(message : String)
+    func showHUD(message: String?)
+    func updateHUD(message: String)
 }
 
 extension BaseModuleView {
@@ -31,14 +31,16 @@ extension BaseModuleView {
     func hideHUD() {
          KRProgressHUD.dismiss()
     }
-    func showHUD(withError error:String?){
+    
+    func showHUD(withError error: String?){
         KRProgressHUD.showMessage(error!)
     }
     
-    func showError(error:String?) {
+    func showError(error: String?) {
         //optional
     }
-    func showHUD(message : String?){
+    
+    func showHUD(message: String?){
         if let msg = message, msg.count > 0 {
             KRProgressHUD.show(withMessage: msg)
         }else{
@@ -46,7 +48,7 @@ extension BaseModuleView {
         }
     }
     
-    func updateHUD(message : String){
+    func updateHUD(message: String){
         KRProgressHUD.update(message: message);
     }
 }

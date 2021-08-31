@@ -25,7 +25,6 @@ class AppDependency {
         module.build(root:appWireframe)
         
         let nav = UINavigationController(rootViewController:module.view.controller!)
-        nav.setNavigationBarHidden(true, animated: false)
         window.rootViewController = nav
     }
 }

@@ -49,7 +49,7 @@ struct MockData {
 }
 
 struct ControllerTittle {
-    static let feedsTittle = "My Feeds"
+    static let feedsTittle = "Reddit Feeds"
 }
  
 struct ViewControllerIds {

@@ -21,27 +21,27 @@ public protocol BaseModulePresenter: class {
 extension BaseModulePresenter {
     
     func viewDidLoad() {
-        fatalError("Implementation pending...")
+        //Implementation pending..."
     }
     
     func viewWillAppear(animated: Bool) {
-        fatalError("Implementation pending...")
+        //Implementation pending..."
     }
     
     func viewDidAppear(animated: Bool) {
-        fatalError("Implementation pending...")
+        //Implementation pending..."
     }
     
     func viewWillDisappear(animated: Bool) {
-        fatalError("Implementation pending...")
+        //Implementation pending..."
     }
     
     func viewDidDisappear(animated: Bool) {
-        fatalError("Implementation pending...")
+        //Implementation pending..."
     }
     
     func presentLogin() {
-        fatalError("Implementation pending...")
+        //Implementation pending..."
     }
 }
 

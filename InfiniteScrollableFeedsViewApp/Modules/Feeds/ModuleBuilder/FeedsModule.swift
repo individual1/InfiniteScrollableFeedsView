@@ -5,10 +5,7 @@
 //  Created by Bhawna on 14/08/21.
 //
 
-import Foundation
-import UIKit
-
-class FeedsModule: BaseModule, BaseModuleInteractable,BaseModuleRemotable {
+class FeedsModule: BaseModule, BaseModuleInteractable, BaseModuleRemotable {
     
     typealias ModuleView = FeedsViewInterface
     typealias ModuleInteractor = FeedsInteractor

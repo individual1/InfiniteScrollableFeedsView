@@ -7,6 +7,7 @@
 
 import XCTest
 import UIKit
+
 @testable import InfiniteScrollableFeedsViewApp
 
 class FeedsViewTest: XCTestCase, UITableViewDelegate {
@@ -39,6 +40,7 @@ class FeedsViewTest: XCTestCase, UITableViewDelegate {
         appWireframe = AppWireframe()
         appWireframe.showRoot(with: UIViewController(), in: UIWindow())
         appdependency = AppDependency.shared
+        
         let window = UIWindow(frame: UIScreen.main.bounds)
         appdependency.attachRootViewControllerInWindow(window)
         window.makeKeyAndVisible()
@@ -76,24 +78,16 @@ class FeedsViewTest: XCTestCase, UITableViewDelegate {
     
     func testCell() {
         let feed = FeedsCell()
-        XCTAssertNotNil(feed.ResizeImage(image: UIImage.init(named: ImageName.share)!, targetSize: CGSize.init(width: 140, height: 140)))
-        feed.configureCell(imgageUrlStr: MockData.thumbnail,
-                           feedTittle: MockData.tittle,
-                           feedNoofComments: MockData.nocomments,
-                           feedScore: MockData.score,
-                           thumbnailWidth: Int(MockData.thumbnail_width),
-                           thumbnailHeight: Int(MockData.thumbnail_height))
+        feed.configureCell(feedsItem: presenter._feedItems.first!)
     }
     
     func testFeedViewMethod() {
         sut.reloadData()
-        XCTAssertNotNil(sut.visibleIndexPathsToReload(intersecting: [IndexPath(row: 0, section: 0)]))
     }
 
     func testIfPresenterHasBeenCreated() {
-        XCTAssertNotNil(presenter.item(at: 0))
+        XCTAssertNotNil(presenter.item(at: IndexPath(item: 0, section: 0)))
         presenter.interactor = FeedsInteractor()
-        XCTAssertNotNil(presenter.fetchFeedsList(afterLink: ""))
         XCTAssertNotNil(presenter.handleResponse([:]))
         XCTAssertNotNil(presenter.numberOfItems(in: 0))
     }

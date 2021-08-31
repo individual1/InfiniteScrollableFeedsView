@@ -67,6 +67,7 @@ extension FeedsPresenter: FeedsInteractorOutput {
             for i in 0..<childObj.count {
                 let children = childObj[i] as? [String : Any]
                 guard let _data = children?[Keys.data] as? [String:Any] else { return }
+                
                 if let _ = _data[Keys.numComments] as? NSNumber, let _ = _data[Keys.score] as? NSNumber {
                     let numberComments = _data[Keys.numComments] as? NSNumber
                     let score = _data[Keys.score] as? NSNumber

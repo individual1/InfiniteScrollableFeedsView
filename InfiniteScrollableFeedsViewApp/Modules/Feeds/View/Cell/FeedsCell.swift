@@ -10,7 +10,7 @@ import SDWebImage
 
 class FeedsCell: TableViewBaseCell {
     
-    var feedImageView : UIImageView = {
+    var feedImageView: UIImageView = {
         var imageView = UIImageView()
         imageView.backgroundColor = .white
         imageView.contentMode = .scaleAspectFit
@@ -19,7 +19,7 @@ class FeedsCell: TableViewBaseCell {
         return  imageView
     }()
     
-    var blackShadowView : UIView = {
+    var blackShadowView: UIView = {
         var view = UIView()
         view.backgroundColor = .black
         view.alpha = 0.0
@@ -51,38 +51,41 @@ class FeedsCell: TableViewBaseCell {
         var view = UIView()
         view.backgroundColor = UIColor.gray
         return view
-        
     }()
     
-    let scoreButton = UIButton().buttonForView("", imageName: ImageName.like)
-    let likeButton = UIButton().buttonForView("", imageName: ImageName.like)
-    var commentButton = UIButton().buttonForView(ButtonTittle.comment, imageName: ImageName.comment)
-    let shareButton = UIButton().buttonForView(ButtonTittle.share, imageName: ImageName.share)
-    var newImgHeight: Int?
+       let scoreButton = UIButton().buttonForView("", imageName: ImageName.like)
+       let likeButton = UIButton().buttonForView("", imageName: ImageName.like)
+       var commentButton = UIButton().buttonForView(ButtonTittle.comment, imageName: ImageName.comment)
+       let shareButton = UIButton().buttonForView(ButtonTittle.share, imageName: ImageName.share)
+       var newImgHeight: Int?
         
     func configureCell(feedsItem: FeedsModel) {
         feedTittleLbl.text = feedsItem.title ?? ""
         commentButton.setTitle(formatNumber(feedsItem.num_comments ?? 0) , for: .normal)
         likeButton.setTitle(formatNumber(feedsItem.score ?? 0), for: .normal)
+        
         feedImageView.sd_setImage(with: URL(string: feedsItem.thumbnail!),
-                                  placeholderImage: UIImage.init(named: ImageName.placeholder), options: [])
+                                  placeholderImage: UIImage.init(named: ImageName.placeholder),
+                                  options: [])
                                   { (image, error, SDImageCacheType, url) in
-            if let _ = image {
-            let ratio = (feedsItem.thumbnailHeight ?? 1)/(feedsItem.thumbnailWidth ?? 1)
-            self.newImgHeight = Int(UIScreen.main.bounds.width) * ratio
-        }
-      }
+                                     if let _ = image {
+                                        let ratio = (feedsItem.thumbnailHeight ?? 1)/(feedsItem.thumbnailWidth ?? 1)
+                                        self.newImgHeight = Int(UIScreen.main.bounds.width) * ratio
+                                     } else {
+                                        self.feedImageView.image = UIImage.init(named: ImageName.placeholder)
+                                     }
+                                  }
     }
     
     override func setupCell()  {
-        addSubview(feedImageView)
-        feedImageView.addSubview(blackShadowView)
-        blackShadowView.fillSuperview()
         addSubview(feedTittleLbl)
         addSubview(horizontalLine)
         addSubview(likeButton)
         addSubview(commentButton)
         addSubview(shareButton)
+        addSubview(feedImageView)
+        feedImageView.addSubview(blackShadowView)
+        blackShadowView.fillSuperview()
     
         addConstraintsWithFormat("H:|-11-[v0]|", views:  feedTittleLbl)
         addConstraintsWithFormat("H:|[v0]|", views: feedImageView)

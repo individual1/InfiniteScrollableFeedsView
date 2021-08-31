@@ -7,6 +7,7 @@
 
 import UIKit
 import XCTest
+
 @testable import InfiniteScrollableFeedsViewApp
 
 class UITableViewExtensionTest: XCTestCase {

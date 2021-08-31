@@ -30,6 +30,7 @@ class FeedsView: UIViewController, UITableViewDataSourcePrefetching {
         super.viewDidLoad()
         setup()
         self.navigationController?.navigationBar.backgroundColor = UIColor.white
+        self.title = presenter.navTitle()
         presenter.fetchFeedsList(afterLink: afterLink)
     }
     
@@ -49,9 +50,6 @@ class FeedsView: UIViewController, UITableViewDataSourcePrefetching {
         tblView.delegate = self
         tblView.prefetchDataSource = self
     }
-
-    var lastContentOffset: CGFloat = 0
-
 }
 
 // MARK: - UITableViewDataSource, UITableViewDelegate 
@@ -99,9 +97,9 @@ extension FeedsView: UITableViewDataSource, UITableViewDelegate  {
         if section == 0 {
             return UIView()
         } else {
-        let view = UIView.init(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 20))
+            let view = UIView.init(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 20))
             view.backgroundColor = UIColor.rgb(236, green: 238, blue: 240)
-        return view
+            return view
         }
     }
 }
@@ -117,7 +115,7 @@ extension FeedsView: FeedsViewInterface {
     }
 }
 
-internal extension FeedsView {
+extension FeedsView {
     func isLoadingCell(for indexPath: IndexPath) -> Bool {
         return indexPath.section == ((presenter?.numberOfSections())! - 1)
     }

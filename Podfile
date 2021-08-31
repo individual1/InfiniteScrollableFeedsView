@@ -6,9 +6,8 @@ target 'InfiniteScrollableFeedsViewApp' do
   use_frameworks!
 
   # Pods for InfiniteScrollableFeedsViewApp
-  pod 'Alamofire', '~> 4.7'
-  pod 'AlamofireObjectMapper', '~> 5.0'
-  pod 'AlamofireImage'
+  pod 'Alamofire'
+  pod 'AlamofireObjectMapper', :git => 'https://github.com/RomanPodymov/AlamofireObjectMapper.git', :branch => 'xcode-10-2-fix'
   pod 'SDWebImage'
   pod 'KRProgressHUD'
   target 'InfiniteScrollableFeedsViewAppTests' do

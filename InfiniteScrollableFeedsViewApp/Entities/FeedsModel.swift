@@ -19,8 +19,7 @@ struct FeedsModel {
 }
 
 extension FeedsModel: Mappable {
-    init?(map: Map) {
-    }
+    init?(map: Map) {}
     
     mutating func mapping(map: Map) {
         thumbnail     <- map["thumbnail"]

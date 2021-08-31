@@ -22,7 +22,6 @@ protocol FeedsPresenterInterface: BaseModulePresenter {
 }
 
 protocol FeedsWireframeInterface: BaseModuleWireframe {
-    static func createFeedsModule() -> FeedsModule
     func showFeedsDetailsScreen(from view: FeedsViewInterface, for model: FeedsModel)
 }
 

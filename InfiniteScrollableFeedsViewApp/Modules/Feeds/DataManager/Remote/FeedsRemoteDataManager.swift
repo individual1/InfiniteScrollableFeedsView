@@ -5,7 +5,6 @@
 //  Created by Bhawna on 14/08/21.
 //
 
-import Foundation
 import Alamofire
 import AlamofireObjectMapper
 import ObjectMapper

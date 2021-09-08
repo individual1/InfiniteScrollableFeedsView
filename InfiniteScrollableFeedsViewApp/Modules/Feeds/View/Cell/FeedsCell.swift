@@ -68,13 +68,13 @@ class FeedsCell: TableViewBaseCell {
                                   placeholderImage: UIImage.init(named: ImageName.placeholder),
                                   options: [])
                                   { (image, error, SDImageCacheType, url) in
-        if let _ = image {
-           let ratio = (feedsItem.thumbnailHeight ?? 1)/(feedsItem.thumbnailWidth ?? 1)
-           self.newImgHeight = Int(UIScreen.main.bounds.width) * ratio
-        } else  {
-           self.feedImageView.image = UIImage.init(named: ImageName.placeholder)
-        }
-      }
+                                     if let _ = image {
+                                        let ratio = (feedsItem.thumbnailHeight ?? 1)/(feedsItem.thumbnailWidth ?? 1)
+                                        self.newImgHeight = Int(UIScreen.main.bounds.width) * ratio
+                                     } else {
+                                        self.feedImageView.image = UIImage.init(named: ImageName.placeholder)
+                                     }
+                                  }
     }
     
     override func setupCell()  {

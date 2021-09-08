@@ -95,11 +95,11 @@ extension FeedsView: UITableViewDataSource, UITableViewDelegate  {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 {
-        return UIView()
+            return UIView()
         } else {
-        let view = UIView.init(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 20))
-        view.backgroundColor = UIColor.rgb(236, green: 238, blue: 240)
-        return view
+            let view = UIView.init(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 20))
+            view.backgroundColor = UIColor.rgb(236, green: 238, blue: 240)
+            return view
         }
     }
 }
